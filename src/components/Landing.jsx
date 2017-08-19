@@ -1,47 +1,68 @@
-import React from 'react'
+import React, { Component } from 'react'
 import annyang from '../assets/lib/annyang.min.js'
 import lullaby from '../assets/sounds/lullaby_music_box.mp3'
 import horror from '../assets/sounds/Horror_tension.mp3'
 
-export default React.createClass({
-    //
-    // getInitalState() {
-    //     saidBegin: false,
-    //     saidStop: false
-    // },
+const musicBox = new Audio(lullaby)
+const tension = new Audio(horror)
+let tensionInterval
 
-    render() {
-        const musicBox = new Audio(lullaby)
-            musicBox.loop = true
-            musicBox.volume = 0.7
-            musicBox.play()
-
-        const tension = new Audio(horror)
-            tension.volume = 0.5
-
-        const tensionInterval = setInterval(playTension, 12000)
-
-
-        function playTension() {
-            tension.play()
+export default class Landing extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            saidStop: false
         }
-        const stopIntroSounds = function() {
-            musicBox.pause()
-            tension.pause()
-            clearInterval(tensionInterval)
-        }
+    }
 
+    componentDidMount() {
         if (annyang) {
             var commands = {
-                'stop': stopIntroSounds
-            };
-            annyang.debug();
-            annyang.addCommands(commands);
-            annyang.start();
+                'stop': () => this.stopIntroSounds()
+            }
+            annyang.debug()
+            annyang.addCommands(commands)
+            annyang.start()
         }
+    }
+
+    stopIntroSounds() {
+        this.setState({ saidStop: true })
+        musicBox.pause()
+        this.toggleTensionInterval()
+    }
+
+    playTension() {
+        tension.volume = 0.5
+        tension.play()
+    }
+
+    toggleTensionInterval() {
+        if (!tensionInterval) {
+            tensionInterval = setInterval(this.playTension, 12000)
+        } else {
+            tension.pause()
+            clearInterval(tensionInterval)
+            tensionInterval = null
+        }
+    }
+
+    playMusicBox() {
+        musicBox.play()
+        this.toggleTensionInterval()
+    }
+
+    render() {
+
+        if (musicBox.currentTime === 0) {
+            musicBox.loop = true
+            musicBox.volume = 0.7
+            this.playMusicBox()
+        }
+
 
         return (
             <div className="landing"></div>
         )
     }
-})
+}
