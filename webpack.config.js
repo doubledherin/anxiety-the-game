@@ -5,7 +5,6 @@ module.exports = {
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
         './src/index.jsx',
-        './src/assets/js/playAnxiety.js',
         './src/assets/lib/annyang.min.js'
     ],
     module: {
