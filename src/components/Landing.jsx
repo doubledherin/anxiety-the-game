@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import annyang from '../assets/lib/annyang.min.js'
 import lullaby from '../assets/sounds/lullaby_music_box.mp3'
 import horror from '../assets/sounds/Horror_tension.mp3'
+import Bathroom from './scenes/Bathroom.jsx'
 
 const musicBox = new Audio(lullaby)
 const tension = new Audio(horror)
@@ -11,19 +12,26 @@ export default class Landing extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            saidStop: false
+            saidStop: false,
+            saidPlay: false
         }
     }
 
     componentDidMount() {
         if (annyang) {
             var commands = {
-                'stop': () => this.stopIntroSounds()
+                'stop': () => this.stopIntroSounds(),
+                'play': () => this.goToBathroom(),
             }
             annyang.debug()
             annyang.addCommands(commands)
             annyang.start()
         }
+    }
+
+    goToBathroom() {
+        this.setState({ saidPlay: true })
+        this.stopIntroSounds()
     }
 
     stopIntroSounds() {
@@ -62,7 +70,11 @@ export default class Landing extends Component {
 
 
         return (
-            <div className="landing"></div>
+            <div className="landing">
+                { this.state.saidPlay &&
+                    <Bathroom />
+                }
+            </div>
         )
     }
 }
