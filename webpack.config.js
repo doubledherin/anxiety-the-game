@@ -4,7 +4,9 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
-        './src/index.jsx'
+        './src/index.jsx',
+        './src/assets/js/playAnxiety.js',
+        './src/assets/lib/annyang.min.js'
     ],
     module: {
         loaders: [
@@ -14,7 +16,7 @@ module.exports = {
                 loader: 'react-hot-loader!babel-loader'
             },
             {
-                test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+                test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|m4a)$/,
                 loader: 'file'
             }
         ]
