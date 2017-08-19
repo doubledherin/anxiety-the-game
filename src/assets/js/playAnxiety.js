@@ -1,6 +1,13 @@
 import annyang from '../lib/annyang.min.js'
-const musicBox = document.querySelector(`audio[data-sound="music-box"]`)
-const tension = document.querySelector(`audio[data-sound="tension"]`)
+import lullaby from '../../assets/sounds/lullaby_music_box.mp3'
+import horror from '../../assets/sounds/Horror_tension.mp3'
+import test from '../../assets/sounds/testOfMeTalking.m4a'
+import morning from '../../assets/sounds/Morning.m4a'
+
+const musicBox = new Audio(lullaby)
+const tension = new Audio(horror)
+const meTalking = new Audio(test)
+const bedRustle = new Audio(morning)
 
 const playLullaby = function() {
 

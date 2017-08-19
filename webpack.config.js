@@ -16,8 +16,11 @@ module.exports = {
                 loader: 'react-hot-loader!babel-loader'
             },
             {
-                test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|m4a)$/,
-                loader: 'file'
+                test: /\.(wav|mp3|m4a)$/,
+                loader: "file-loader?name=/assets/sounds/[name].[ext]",
+                options:  {
+                    emitFile: true
+                }
             }
         ]
     },
